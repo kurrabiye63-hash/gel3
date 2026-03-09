@@ -188,14 +188,14 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        <div className="sidebar-content scroll-area space-y-6">
+        <div className="sidebar-content scroll-area space-y-4">
           {/* View Mode Navigation */}
           <section>
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-5 h-5 rounded-md bg-[#c5a059]/10 flex items-center justify-center">
-                <ArrowRight size={11} className="text-[#c5a059]" />
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-4 h-4 rounded-md bg-[#c5a059]/10 flex items-center justify-center">
+                <ArrowRight size={10} className="text-[#c5a059]" />
               </div>
-              <h2 className="font-display text-[10px] font-bold text-white/35 uppercase tracking-[0.25em]">Çekim Modu</h2>
+              <h2 className="font-display text-[9px] font-bold text-white/35 uppercase tracking-[0.25em]">Çekim Modu</h2>
             </div>
             <ViewModeNav shootMode={shootMode} onShootModeChange={setShootMode} />
           </section>
@@ -204,13 +204,13 @@ const App: React.FC = () => {
 
           {/* Creative Assets Section */}
           <section>
-            <div className="flex items-center gap-2.5 mb-6">
-              <div className="w-5 h-5 rounded-md bg-[#c5a059]/10 flex items-center justify-center">
-                <LayoutGrid size={11} className="text-[#c5a059]" />
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-4 h-4 rounded-md bg-[#c5a059]/10 flex items-center justify-center">
+                <LayoutGrid size={10} className="text-[#c5a059]" />
               </div>
-              <h2 className="font-display text-[10px] font-bold text-white/35 uppercase tracking-[0.25em]">Yaratıcı Varlıklar</h2>
+              <h2 className="font-display text-[9px] font-bold text-white/35 uppercase tracking-[0.25em]">Yaratıcı Varlıklar</h2>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <ImageUploader label="Giysi Referansı" onUpload={setDressUrl} isLoading={isLoading} />
               <ImageUploader label="Model Konsepti" onUpload={setModelUrl} isLoading={isLoading} />
 
@@ -240,13 +240,13 @@ const App: React.FC = () => {
 
           {/* Parameters Section */}
           <section>
-            <div className="flex items-center gap-2.5 mb-6">
-              <div className="w-5 h-5 rounded-md bg-[#c5a059]/10 flex items-center justify-center">
-                <Settings2 size={11} className="text-[#c5a059]" />
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-4 h-4 rounded-md bg-[#c5a059]/10 flex items-center justify-center">
+                <Settings2 size={10} className="text-[#c5a059]" />
               </div>
-              <h2 className="font-display text-[10px] font-bold text-white/35 uppercase tracking-[0.25em]">Parametreler</h2>
+              <h2 className="font-display text-[9px] font-bold text-white/35 uppercase tracking-[0.25em]">Parametreler</h2>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
               {/* Quality Badge */}
               <div className="space-y-3">
                 <label className="text-[10px] font-bold text-white/25 uppercase tracking-widest pl-1">Çıktı Kalitesi</label>
@@ -276,7 +276,7 @@ const App: React.FC = () => {
         </div>
 
         {/* System Access Button */}
-        <div className="p-6 border-t border-white/[0.04]">
+        <div className="p-4 border-t border-white/[0.04]">
           <motion.button
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
@@ -362,7 +362,7 @@ const App: React.FC = () => {
         </Routes>
 
         {/* System Dock */}
-        <div className="h-14 border-t border-white/[0.04] flex items-center justify-between px-10 bg-black/30 backdrop-blur-xl relative z-10">
+        <div className="h-10 border-t border-white/[0.04] flex items-center justify-between px-6 bg-black/30 backdrop-blur-xl relative z-10">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2 text-[9px] font-bold text-white/20 uppercase tracking-widest">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 status-dot" />
@@ -386,7 +386,7 @@ const App: React.FC = () => {
       </main>
 
       {/* ─── Results History Panel ─── */}
-      <aside className="gallery-panel p-8 overflow-hidden">
+      <aside className="gallery-panel p-5 overflow-hidden">
         <ResultGallery results={results} isLoading={isLoading} />
       </aside>
 

@@ -30,22 +30,22 @@ export const ViewPage: React.FC<ViewPageProps> = ({
   progressMsg,
 }) => {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-12 relative z-10">
+    <div className="flex-1 flex flex-col items-center justify-center p-8 relative z-10">
       <motion.div
         key={viewMode}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-        className="w-full max-w-2xl space-y-14"
+        className="w-full max-w-xl space-y-8"
       >
         {/* Hero Title */}
-        <div className="text-center space-y-5">
+        <div className="text-center space-y-3">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            <h2 className="font-display text-5xl font-extrabold tracking-tight leading-tight"
+            <h2 className="font-display text-4xl font-extrabold tracking-tight leading-tight"
               style={{
                 background: `linear-gradient(135deg, #ffffff 0%, ${accentColor}80 50%, ${accentColor} 100%)`,
                 WebkitBackgroundClip: "text",
@@ -88,10 +88,10 @@ export const ViewPage: React.FC<ViewPageProps> = ({
         </div>
 
         {/* Engine & Generate */}
-        <div className="space-y-10">
+        <div className="space-y-6">
           <EngineSelector selected={engine} onSelect={onSelectEngine} isLoading={isLoading} viewMode={viewMode} />
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <motion.button
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
@@ -141,11 +141,11 @@ export const ViewPage: React.FC<ViewPageProps> = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="flex justify-center pt-6 opacity-15 hover:opacity-40 transition-opacity duration-700"
+                className="flex justify-center pt-2 opacity-15 hover:opacity-40 transition-opacity duration-700"
               >
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-[1px] h-10 bg-gradient-to-b from-white/40 to-transparent" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.4em]">Giriş İçin Hazır</p>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-[1px] h-6 bg-gradient-to-b from-white/40 to-transparent" />
+                  <p className="text-[8px] font-bold uppercase tracking-[0.4em]">Giriş İçin Hazır</p>
                 </div>
               </motion.div>
             )}

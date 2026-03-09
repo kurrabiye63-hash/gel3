@@ -79,7 +79,7 @@ export const ViewModeNav: React.FC<Props> = ({ shootMode, onShootModeChange }) =
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => handleShootModeChange("studio")}
-          className={`relative flex flex-col items-center gap-2 py-4 px-3 rounded-2xl transition-all duration-400 overflow-hidden border
+          className={`relative flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all duration-400 overflow-hidden border
             ${shootMode === "studio"
               ? "bg-[#c5a059]/[0.06] border-[#c5a059]/25"
               : "bg-white/[0.01] border-white/[0.05] hover:bg-white/[0.03] hover:border-white/[0.08]"
@@ -97,21 +97,21 @@ export const ViewModeNav: React.FC<Props> = ({ shootMode, onShootModeChange }) =
             />
           )}
 
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-400
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-400
             ${shootMode === "studio"
               ? "bg-gradient-to-br from-[#c5a059] to-[#b8860b] text-black shadow-lg shadow-[#c5a059]/20"
               : "bg-white/[0.04] text-white/20"
             }`}
           >
-            <Camera size={18} strokeWidth={1.8} />
+            <Camera size={15} strokeWidth={1.8} />
           </div>
 
           <div className="text-center relative z-10">
-            <p className={`text-[11px] font-bold tracking-wider transition-colors duration-300
+            <p className={`text-[10px] font-bold tracking-wider transition-colors duration-300
               ${shootMode === "studio" ? "text-white" : "text-white/25"}`}>
               Stüdyo
             </p>
-            <p className={`text-[7px] font-bold uppercase tracking-[0.2em] mt-0.5 transition-colors duration-300
+            <p className={`text-[6px] font-bold uppercase tracking-[0.2em] mt-0.5 transition-colors duration-300
               ${shootMode === "studio" ? "text-[#c5a059]/60" : "text-white/10"}`}>
               İç Mekan
             </p>
@@ -132,7 +132,7 @@ export const ViewModeNav: React.FC<Props> = ({ shootMode, onShootModeChange }) =
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => handleShootModeChange("location")}
-          className={`relative flex flex-col items-center gap-2 py-4 px-3 rounded-2xl transition-all duration-400 overflow-hidden border
+          className={`relative flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all duration-400 overflow-hidden border
             ${shootMode === "location"
               ? "bg-[#59c5a0]/[0.06] border-[#59c5a0]/25"
               : "bg-white/[0.01] border-white/[0.05] hover:bg-white/[0.03] hover:border-white/[0.08]"
@@ -150,21 +150,21 @@ export const ViewModeNav: React.FC<Props> = ({ shootMode, onShootModeChange }) =
             />
           )}
 
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-400
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-400
             ${shootMode === "location"
               ? "bg-gradient-to-br from-[#59c5a0] to-[#3a9e7a] text-black shadow-lg shadow-[#59c5a0]/20"
               : "bg-white/[0.04] text-white/20"
             }`}
           >
-            <MapPin size={18} strokeWidth={1.8} />
+            <MapPin size={15} strokeWidth={1.8} />
           </div>
 
           <div className="text-center relative z-10">
-            <p className={`text-[11px] font-bold tracking-wider transition-colors duration-300
+            <p className={`text-[10px] font-bold tracking-wider transition-colors duration-300
               ${shootMode === "location" ? "text-white" : "text-white/25"}`}>
               Mekan
             </p>
-            <p className={`text-[7px] font-bold uppercase tracking-[0.2em] mt-0.5 transition-colors duration-300
+            <p className={`text-[6px] font-bold uppercase tracking-[0.2em] mt-0.5 transition-colors duration-300
               ${shootMode === "location" ? "text-[#59c5a0]/60" : "text-white/10"}`}>
               Dış Mekan
             </p>
@@ -200,7 +200,7 @@ export const ViewModeNav: React.FC<Props> = ({ shootMode, onShootModeChange }) =
                   whileHover={{ x: 3 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => navigate(tab.path)}
-                  className={`relative flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-left transition-all duration-300 overflow-hidden
+                  className={`relative flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all duration-300 overflow-hidden
                     ${isActive
                       ? "bg-white/[0.04] border border-white/[0.08]"
                       : "bg-transparent border border-transparent hover:bg-white/[0.02] hover:border-white/[0.04]"
@@ -218,7 +218,7 @@ export const ViewModeNav: React.FC<Props> = ({ shootMode, onShootModeChange }) =
 
                   {/* Icon */}
                   <div
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300
+                    className={`w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 transition-all duration-300
                       ${isActive ? "text-black" : "bg-white/[0.03] text-white/20"}`}
                     style={
                       isActive

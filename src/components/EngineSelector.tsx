@@ -50,11 +50,11 @@ export const EngineSelector: React.FC<Props> = ({ selected, onSelect, isLoading,
   const isNonFrontView = viewMode !== "front";
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between px-1">
-        <div className="flex items-center gap-3">
-          <div className="h-[1px] w-4 bg-[#c5a059]/30" />
-          <h3 className="font-display text-[10px] font-bold tracking-[0.3em] text-white/25 uppercase">AI İşlem Düğümleri</h3>
+        <div className="flex items-center gap-2">
+          <div className="h-[1px] w-3 bg-[#c5a059]/30" />
+          <h3 className="font-display text-[9px] font-bold tracking-[0.3em] text-white/25 uppercase">AI İşlem Düğümleri</h3>
           <div className="h-[1px] flex-1 bg-white/[0.03]" />
         </div>
         <AnimatePresence>
@@ -81,7 +81,7 @@ export const EngineSelector: React.FC<Props> = ({ selected, onSelect, isLoading,
               whileTap={!isDisabled ? { scale: 0.995 } : {}}
               onClick={() => !isLoading && !isDisabled && onSelect(engine.id as AIModelId)}
               disabled={isLoading || isDisabled}
-              className={`card-glass p-5 text-left relative overflow-hidden group transition-all duration-500
+              className={`card-glass p-3.5 text-left relative overflow-hidden group transition-all duration-500
                 ${isDisabled
                   ? 'opacity-30 cursor-not-allowed grayscale'
                   : isSelected
@@ -109,10 +109,10 @@ export const EngineSelector: React.FC<Props> = ({ selected, onSelect, isLoading,
                 />
               )}
 
-              <div className="flex items-center gap-5 relative z-10">
+              <div className="flex items-center gap-3 relative z-10">
                 <motion.div
                   animate={isSelected && !isDisabled ? { scale: 1 } : { scale: 0.95 }}
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 flex-shrink-0
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-500 flex-shrink-0
                     ${isSelected && !isDisabled
                       ? 'text-black shadow-lg'
                       : 'bg-white/[0.03] text-white/15 group-hover:text-white/30 group-hover:bg-white/[0.05]'

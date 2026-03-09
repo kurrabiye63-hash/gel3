@@ -176,7 +176,7 @@ h1, h2, h3, h4, .font-display {
 
 /* ============ GALLERY PANEL ============ */
 .gallery-panel {
-  width: 340px;
+  width: 500px;
   background: linear-gradient(180deg, rgba(10, 10, 15, 0.98) 0%, rgba(5, 5, 10, 0.99) 100%);
   border-left: 1px solid var(--border-subtle);
   display: flex;

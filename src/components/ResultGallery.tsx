@@ -37,34 +37,34 @@ export const ResultGallery: React.FC<Props> = ({ results, isLoading }) => {
   };
 
   return (
-    <div className="flex flex-col gap-8 h-full">
+    <div className="flex flex-col gap-4 h-full">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded-lg bg-[#c5a059]/10 flex items-center justify-center">
-            <History size={13} className="text-[#c5a059]/60" />
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-lg bg-[#c5a059]/10 flex items-center justify-center">
+            <History size={11} className="text-[#c5a059]/60" />
           </div>
-          <h3 className="font-display text-sm font-bold text-white/30 uppercase tracking-[0.15em]">Arşiv</h3>
+          <h3 className="font-display text-xs font-bold text-white/30 uppercase tracking-[0.15em]">Arşiv</h3>
         </div>
         <motion.div
           key={results.length}
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
-          className="text-[9px] font-bold text-white/10 tracking-widest bg-white/[0.03] px-2.5 py-1.5 rounded-lg border border-white/[0.04]"
+          className="text-[8px] font-bold text-white/10 tracking-widest bg-white/[0.03] px-2 py-1 rounded-lg border border-white/[0.04]"
         >
           {results.length} ÇIKTI
         </motion.div>
       </div>
 
       {/* Gallery Grid */}
-      <div className="grid grid-cols-1 gap-8 overflow-y-auto pr-2 scroll-area flex-1">
+      <div className="grid grid-cols-1 gap-5 overflow-y-auto pr-1 scroll-area flex-1">
         <AnimatePresence mode="popLayout">
           {/* Empty State */}
           {results.length === 0 && !isLoading && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex flex-col items-center justify-center gap-6 py-32"
+              className="flex flex-col items-center justify-center gap-4 py-16"
             >
               <div className="w-16 h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center">
                 <LayoutGrid size={28} className="text-white/8" />
@@ -86,7 +86,7 @@ export const ResultGallery: React.FC<Props> = ({ results, isLoading }) => {
               className="relative group cursor-pointer"
               onClick={() => setSelectedImage(result)}
             >
-              <div className="card-glass relative aspect-[4/5] overflow-hidden bg-[#050508] group-hover:border-[#c5a059]/15 transition-all duration-700">
+              <div className="card-glass relative aspect-[3/4] overflow-hidden bg-[#050508] group-hover:border-[#c5a059]/15 transition-all duration-700">
                 {/* Image */}
                 <img
                   src={result.url}
@@ -125,26 +125,26 @@ export const ResultGallery: React.FC<Props> = ({ results, isLoading }) => {
               </div>
 
               {/* Meta Info */}
-              <div className="mt-4 px-1 flex justify-between items-center">
-                <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2">
-                    <Clock size={9} className="text-white/10" />
-                    <span className="text-[9px] text-white/12 font-bold tracking-wider uppercase">{result.timestamp}</span>
-                  </div>
+              <div className="mt-3 px-1 flex justify-between items-center">
+                <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-1.5">
-                    <Zap size={8} className="text-[#c5a059]/50" fill="currentColor" />
-                    <span className="text-[8px] font-bold text-[#c5a059]/40 tracking-wider uppercase">{result.viewMode === 'back' ? 'Arka' : result.viewMode === 'closeup' ? 'Detay' : result.viewMode === 'location' ? 'Mekan' : 'Ön'} Çekim</span>
+                    <Clock size={8} className="text-white/10" />
+                    <span className="text-[8px] text-white/12 font-bold tracking-wider uppercase">{result.timestamp}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Zap size={7} className="text-[#c5a059]/50" fill="currentColor" />
+                    <span className="text-[7px] font-bold text-[#c5a059]/40 tracking-wider uppercase">{result.viewMode === 'back' ? 'Arka' : result.viewMode === 'closeup' ? 'Detay' : result.viewMode === 'location' ? 'Mekan' : 'Ön'} Çekim</span>
                   </div>
                 </div>
-                
+
                 <motion.button
-                  whileHover={{ scale: 1.1, color: "#c5a059" }}
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => { e.stopPropagation(); downloadImage(result.url, `fashionmaster-${result.id}.png`); }}
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/20 hover:border-[#c5a059]/30 transition-all duration-300"
+                  className="w-9 h-9 rounded-xl bg-[#c5a059]/10 border border-[#c5a059]/20 flex items-center justify-center text-[#c5a059] hover:bg-[#c5a059]/20 transition-all duration-300"
                   title="Hızlı İndir"
                 >
-                  <Download size={14} />
+                  <Download size={16} />
                 </motion.button>
               </div>
             </motion.div>
@@ -157,7 +157,7 @@ export const ResultGallery: React.FC<Props> = ({ results, isLoading }) => {
               animate={{ opacity: 1, y: 0 }}
               className="card-glass border-dashed border-white/[0.06] overflow-hidden"
             >
-              <div className="aspect-[4/5] bg-[#050508] flex flex-col items-center justify-center relative">
+              <div className="aspect-[3/4] bg-[#050508] flex flex-col items-center justify-center relative">
                 {/* Animated scanning line */}
                 <motion.div
                   animate={{ y: [-200, 200] }}

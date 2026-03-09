@@ -1044,3 +1044,106 @@ No mismatched perspective
 ------------------------------------------------
 [END TECHNICAL PROMPT BLOCK]
 `;
+
+
+// ================================================
+// OUTDOOR BACKGROUND PROMPT — Location Background Generator
+// ================================================
+export const OUTDOOR_BACKGROUND_PROMPT = `
+[START TECHNICAL PROMPT BLOCK]
+------------------------------------------------
+NANO BANANA PRO – OUTDOOR BRIDAL PORTRAIT BACKGROUND
+
+------------------------------------------------
+SCENE TYPE
+------------------------------------------------
+
+Create an outdoor luxury fashion photography background designed for waist-up and close portrait bridal shoots.
+
+No people in the scene.
+
+This image will serve as a background plate for a bridal editorial portrait.
+
+------------------------------------------------
+LOCATION
+------------------------------------------------
+
+A historic European castle surrounded by a vast botanical garden.
+
+Visible environment elements should include:
+
+• elegant stone castle architecture softly visible in background
+• manicured botanical garden hedges
+• blooming flowers and plants
+• classical garden pathways
+• decorative stone sculptures
+• elegant garden symmetry
+
+The garden must feel luxurious and romantic.
+
+------------------------------------------------
+BACKGROUND DEPTH
+------------------------------------------------
+
+The background should be optimized for fashion portrait photography.
+
+• mid-distance garden composition
+• soft background depth
+• subtle perspective compression
+• cinematic depth of field
+
+The environment must appear natural behind a waist-up bridal model.
+
+------------------------------------------------
+LIGHTING
+------------------------------------------------
+
+Professional outdoor fashion lighting.
+
+• soft diffused daylight
+• golden-hour inspired tone
+• balanced highlights on plants and architecture
+• low contrast luxury editorial lighting
+
+------------------------------------------------
+CAMERA STYLE
+------------------------------------------------
+
+Portrait fashion photography style.
+
+Waist-up framing environment
+85mm portrait lens look
+shallow depth of field
+
+The background must remain softly detailed but not distracting.
+
+------------------------------------------------
+ATMOSPHERE
+------------------------------------------------
+
+Romantic luxury bridal editorial environment.
+
+High-end European bridal campaign aesthetic.
+
+------------------------------------------------
+QUALITY
+------------------------------------------------
+
+Ultra photorealistic
+hyper detailed environment
+cinematic outdoor portrait background
+
+------------------------------------------------
+NEGATIVE
+------------------------------------------------
+
+No people
+No models
+No mannequins
+No dresses
+No animals
+No text
+No watermark.   portrait background compression with soft botanical garden blur
+------------------------------------------------
+[END TECHNICAL PROMPT BLOCK]
+`;
