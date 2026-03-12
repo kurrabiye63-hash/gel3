@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Key, Settings2, X, Zap, LayoutGrid, Shield, Gem, ArrowRight, Layers, Upload, SlidersHorizontal, Sparkles, Grid3X3, Menu } from "lucide-react";
+import { Key, Settings2, X, Zap, LayoutGrid, Shield, Gem, ArrowRight, Layers, Upload, SlidersHorizontal, Sparkles, Grid3X3, Menu, Home } from "lucide-react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ImageUploader } from "./components/ImageUploader";
@@ -20,7 +20,7 @@ interface GenerationResult {
   viewMode: string;
 }
 
-const MainHeader: React.FC<{ falKey: string; onToggleSidebar: () => void; onToggleArchive: () => void }> = ({ falKey, onToggleSidebar, onToggleArchive }) => (
+const MainHeader: React.FC<{ falKey: string; onToggleSidebar: () => void; onToggleArchive: () => void; onGoHome: () => void }> = ({ falKey, onToggleSidebar, onToggleArchive, onGoHome }) => (
   <header className="h-16 border-b border-white/10 flex items-center justify-between px-4 md:px-6 bg-black/40 backdrop-blur-md z-[100]">
     <div className="flex items-center space-x-3">
       <button 
@@ -29,8 +29,13 @@ const MainHeader: React.FC<{ falKey: string; onToggleSidebar: () => void; onTogg
       >
         <Menu size={20} />
       </button>
-      <div className="flex flex-col">
-        <h1 className="font-serif text-lg md:text-2xl tracking-widest text-[#D4AF37] uppercase leading-none">Fashion Master</h1>
+      <div 
+        onClick={onGoHome}
+        className="flex flex-col cursor-pointer group"
+      >
+        <div className="flex items-center space-x-2">
+          <h1 className="font-serif text-lg md:text-2xl tracking-widest text-[#D4AF37] uppercase leading-none group-hover:text-white transition-colors">Fashion Master</h1>
+        </div>
         <span className="text-[8px] md:text-[10px] tracking-[0.3em] text-gray-400 font-light mt-1 uppercase">Haute Couture Studio</span>
       </div>
     </div>
@@ -41,12 +46,19 @@ const MainHeader: React.FC<{ falKey: string; onToggleSidebar: () => void; onTogg
       </div>
       <div className="flex items-center space-x-2 md:space-x-4">
         <button 
+          onClick={onGoHome}
+          className="text-gray-400 hover:text-[#D4AF37] transition-colors p-1"
+          title="Giriş Sayfası"
+        >
+          <Home size={20} strokeWidth={1.5} />
+        </button>
+        <button 
           onClick={onToggleArchive}
-          className="md:hidden text-white/70 hover:text-[#D4AF37] transition-colors"
+          className="md:hidden text-white/70 hover:text-[#D4AF37] transition-colors p-1"
         >
           <Sparkles size={18} />
         </button>
-        <button className="text-gray-400 hover:text-[#D4AF37] transition-colors">
+        <button className="text-gray-400 hover:text-[#D4AF37] transition-colors p-1">
           <Settings2 size={20} strokeWidth={1.5} />
         </button>
         <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] text-[10px] md:text-xs font-bold">JD</div>
@@ -263,6 +275,10 @@ const App: React.FC = () => {
         falKey={falKey} 
         onToggleSidebar={() => setShowMobileSidebar(!showMobileSidebar)} 
         onToggleArchive={() => setShowMobileArchive(!showMobileArchive)} 
+        onGoHome={() => {
+          sessionStorage.removeItem("studio_visited");
+          setShowLanding(true);
+        }}
       />
       
       <main className="flex flex-row flex-1 overflow-hidden relative">
