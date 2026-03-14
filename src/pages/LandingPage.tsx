@@ -1,19 +1,59 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Camera, Video, ArrowRight, Sparkles, Film } from "lucide-react";
+import { Camera, Video, ArrowRight, Sparkles, Film, User as UserIcon, LogOut } from "lucide-react";
 import logoUrl from "../logo.jpg";
+import { User } from "@supabase/supabase-js";
 
 interface Props {
   onSelectPhoto: () => void;
   onSelectVideo: () => void;
+  user: User | null;
+  onOpenAuth: () => void;
+  onSignOut: () => void;
+  onOpenPricing: () => void;
 }
 
-export const LandingPage: React.FC<Props> = ({ onSelectPhoto, onSelectVideo }) => {
+export const LandingPage: React.FC<Props> = ({ onSelectPhoto, onSelectVideo, user, onOpenAuth, onSignOut, onOpenPricing }) => {
   return (
     <div className="fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center z-[9999] overflow-hidden">
       {/* Ambient radial glows */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[400px] rounded-full bg-[#D4AF37]/[0.04] blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[300px] rounded-full bg-[#D4AF37]/[0.03] blur-[100px] pointer-events-none" />
+
+      {/* Top Navigation */}
+      <div className="absolute top-6 right-6 z-[10000] flex items-center gap-4">
+        <button 
+          onClick={onOpenPricing}
+          className="text-[10px] font-bold text-white/40 hover:text-[#D4AF37] uppercase tracking-[0.2em] transition-colors pr-4 border-r border-white/10 hidden sm:block"
+        >
+          Paketler
+        </button>
+
+        {user ? (
+          <div className="flex items-center gap-4 bg-white/[0.03] border border-white/10 px-4 py-2 rounded-full backdrop-blur-md">
+            <div className="flex flex-col items-end">
+              <span className="text-[10px] text-white/40 font-bold uppercase tracking-widest">{user.email?.split('@')[0]}</span>
+              <button 
+                onClick={onSignOut}
+                className="text-[9px] text-[#D4AF37] font-bold hover:underline flex items-center gap-1"
+              >
+                Çıkış Yap
+              </button>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] text-xs font-bold uppercase">
+              {user.email?.substring(0, 2)}
+            </div>
+          </div>
+        ) : (
+          <button 
+            onClick={onOpenAuth}
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#D4AF37]/20 to-[#D4AF37]/5 border border-[#D4AF37]/30 rounded-full text-white/80 hover:text-white hover:border-[#D4AF37] transition-all duration-300 backdrop-blur-md group"
+          >
+            <UserIcon size={16} className="text-[#D4AF37] group-hover:scale-110 transition-transform" />
+            <span className="text-[11px] font-bold uppercase tracking-widest">Giriş Yap</span>
+          </button>
+        )}
+      </div>
 
       {/* Subtle grid */}
       <div

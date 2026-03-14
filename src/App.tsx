@@ -9,7 +9,11 @@ import { ResultGallery } from "./components/ResultGallery";
 import { LandingPage } from "./pages/LandingPage";
 import { fal } from "@fal-ai/client";
 import { generateBridalImage, AIModelId, ViewMode } from "./services/falApi";
+import { useAuth } from "./context/AuthContext";
+import { PricingModal } from "./components/PricingModal";
+import { AuthModal } from "./components/AuthModal";
 import logoUrl from "./logo.jpg";
+import { CreditCard, LogOut, User as UserIcon } from "lucide-react";
 
 interface GenerationResult {
   id: string;
@@ -20,52 +24,86 @@ interface GenerationResult {
   viewMode: string;
 }
 
-const MainHeader: React.FC<{ falKey: string; onToggleSidebar: () => void; onToggleArchive: () => void; onGoHome: () => void }> = ({ falKey, onToggleSidebar, onToggleArchive, onGoHome }) => (
-  <header className="h-16 border-b border-white/10 flex items-center justify-between px-4 md:px-6 bg-black/40 backdrop-blur-md z-[100]">
-    <div className="flex items-center space-x-3">
-      <button 
-        onClick={onToggleSidebar}
-        className="md:hidden text-white/70 hover:text-[#D4AF37] transition-colors"
-      >
-        <Menu size={20} />
-      </button>
-      <div 
-        onClick={onGoHome}
-        className="flex flex-col cursor-pointer group"
-      >
-        <div className="flex items-center space-x-2">
-          <h1 className="font-serif text-lg md:text-2xl tracking-widest text-[#D4AF37] uppercase leading-none group-hover:text-white transition-colors">Fashion Master</h1>
-        </div>
-        <span className="text-[8px] md:text-[10px] tracking-[0.3em] text-gray-400 font-light mt-1 uppercase">Haute Couture Studio</span>
-      </div>
-    </div>
-    <div className="flex items-center space-x-3 md:space-x-6 text-sm">
-      <div className="hidden sm:flex items-center space-x-2 text-green-500">
-        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-        <span className="text-xs font-medium">Sistem Çevrimiçi</span>
-      </div>
-      <div className="flex items-center space-x-2 md:space-x-4">
+const MainHeader: React.FC<{ 
+  onToggleSidebar: () => void; 
+  onToggleArchive: () => void; 
+  onGoHome: () => void;
+  onOpenPricing: () => void;
+  onOpenAuth: () => void;
+}> = ({ onToggleSidebar, onToggleArchive, onGoHome, onOpenPricing, onOpenAuth }) => {
+  const { user, credits, signOut } = useAuth();
+  
+  return (
+    <header className="h-16 border-b border-white/10 flex items-center justify-between px-4 md:px-6 bg-black/40 backdrop-blur-md z-[100]">
+      <div className="flex items-center space-x-3">
         <button 
+          onClick={onToggleSidebar}
+          className="md:hidden text-white/70 hover:text-[#D4AF37] transition-colors"
+        >
+          <Menu size={20} />
+        </button>
+        <div 
           onClick={onGoHome}
-          className="text-gray-400 hover:text-[#D4AF37] transition-colors p-1"
-          title="Giriş Sayfası"
+          className="flex flex-col cursor-pointer group"
         >
-          <Home size={20} strokeWidth={1.5} />
-        </button>
-        <button 
-          onClick={onToggleArchive}
-          className="md:hidden text-white/70 hover:text-[#D4AF37] transition-colors p-1"
-        >
-          <Sparkles size={18} />
-        </button>
-        <button className="text-gray-400 hover:text-[#D4AF37] transition-colors p-1">
-          <Settings2 size={20} strokeWidth={1.5} />
-        </button>
-        <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] text-[10px] md:text-xs font-bold">JD</div>
+          <div className="flex items-center space-x-2">
+            <h1 className="font-serif text-lg md:text-2xl tracking-widest text-[#D4AF37] uppercase leading-none group-hover:text-white transition-colors">Fashion Master</h1>
+          </div>
+          <span className="text-[8px] md:text-[10px] tracking-[0.3em] text-gray-400 font-light mt-1 uppercase">Haute Couture Studio</span>
+        </div>
       </div>
-    </div>
-  </header>
-);
+      <div className="flex items-center space-x-3 md:space-x-6">
+        {/* Credits Display */}
+        {user && (
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-[#D4AF37]/10 border border-[#D4AF37]/20 rounded-full cursor-pointer hover:bg-[#D4AF37]/20 transition-all" onClick={onOpenPricing}>
+            <Zap size={14} className="text-[#D4AF37] fill-[#D4AF37]" />
+            <span className="text-[11px] font-bold text-[#D4AF37]">{credits ?? 0} Kontür</span>
+            <div className="w-[1px] h-3 bg-[#D4AF37]/30 mx-1"></div>
+            <span className="text-[10px] text-[#D4AF37]/80 uppercase font-black">+ Yükle</span>
+          </div>
+        )}
+
+        <div className="flex items-center space-x-2 md:space-x-4">
+          <button 
+            onClick={onGoHome}
+            className="text-gray-400 hover:text-[#D4AF37] transition-colors p-1"
+            title="Giriş Sayfası"
+          >
+            <Home size={20} strokeWidth={1.5} />
+          </button>
+          <button 
+            onClick={onToggleArchive}
+            className="md:hidden text-white/70 hover:text-[#D4AF37] transition-colors p-1"
+          >
+            <Sparkles size={18} />
+          </button>
+          
+          {user ? (
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => signOut()}
+                className="text-gray-400 hover:text-red-400 transition-colors p-1"
+                title="Çıkış Yap"
+              >
+                <LogOut size={18} strokeWidth={1.5} />
+              </button>
+              <div className="w-8 h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] text-xs font-bold uppercase">
+                {user.email?.substring(0, 2)}
+              </div>
+            </div>
+          ) : (
+            <button 
+              onClick={onOpenAuth}
+              className="px-4 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-[11px] font-bold text-white transition-all flex items-center gap-2"
+            >
+              <UserIcon size={14} /> Giriş Yap
+            </button>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+};
 
 const BottomStatus: React.FC<{ shootMode: string; engine: string; setShowSettings: (show: boolean) => void }> = ({ shootMode, engine, setShowSettings }) => (
   <footer className="h-8 bg-black border-t border-white/5 flex items-center px-4 justify-between z-[100]">
@@ -135,9 +173,46 @@ const App: React.FC = () => {
   const [showLanding, setShowLanding] = useState<boolean>(!sessionStorage.getItem("studio_visited"));
   const [showMobileSidebar, setShowMobileSidebar] = useState<boolean>(false);
   const [showMobileArchive, setShowMobileArchive] = useState<boolean>(false);
+  const [showPricing, setShowPricing] = useState<boolean>(false);
+  const [showAuth, setShowAuth] = useState<boolean>(false);
 
+  const { user, credits, deductCredits, signOut, loading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          className="w-10 h-10 border-2 border-[#D4AF37]/10 border-t-[#D4AF37] rounded-full mb-6"
+        />
+        <p className="text-[9px] text-white/20 uppercase tracking-[0.4em] font-bold">Protokol Yükleniyor</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="fixed inset-0 bg-[#0a0a0a] flex items-center justify-center p-6 overflow-hidden">
+        {/* Ambient Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D4AF37]/[0.03] blur-[120px] pointer-events-none" />
+        
+        <div className="flex flex-col items-center text-center relative z-10 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-12"
+          >
+            <img src={logoUrl} alt="FashionMaster" className="w-40 md:w-56 mx-auto mb-4 opacity-90 mix-blend-screen" />
+            <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent mx-auto" />
+          </motion.div>
+          <AuthModal isOpen={true} onClose={() => {}} />
+        </div>
+      </div>
+    );
+  }
 
   const getCurrentViewMode = (): ViewMode => {
     if (location.pathname === "/back") return "back";
@@ -174,6 +249,16 @@ const App: React.FC = () => {
   const handleGenerate = async () => {
     const viewMode = getCurrentViewMode();
 
+    if (!user) {
+      setShowAuth(true);
+      return;
+    }
+
+    if ((credits ?? 0) < 4) {
+      handleOpenPricing();
+      return;
+    }
+
     if (!dressUrl || !modelUrl) {
       alert("Lütfen hem tasarım hem de model görselini yükleyin.");
       return;
@@ -192,6 +277,16 @@ const App: React.FC = () => {
 
     try {
       setIsLoading(true);
+      setProgressMsg("Kontürler Doğrulanıyor...");
+
+      // Deduct 4 credits for image
+      const success = await deductCredits(4);
+      if (!success) {
+        alert("Kontür düşülemedi. Lütfen tekrar deneyin.");
+        setIsLoading(false);
+        return;
+      }
+
       setProgressMsg("Editoryal Veriler Senkronize Ediliyor...");
 
       const currentSeed = seed || Math.floor(Math.random() * 1000000);
@@ -252,33 +347,45 @@ const App: React.FC = () => {
     });
   };
 
+  const handleOpenPricing = () => {
+    navigate("/pricing");
+  };
+
   // Show landing page on first visit
   if (showLanding) {
     return (
-      <LandingPage
-        onSelectPhoto={() => {
-          sessionStorage.setItem("studio_visited", "1");
-          setShowLanding(false);
-        }}
-        onSelectVideo={() => {
-          sessionStorage.setItem("studio_visited", "1");
-          setShowLanding(false);
-          navigate("/video");
-        }}
-      />
+      <>
+        <LandingPage
+          user={user}
+          onOpenAuth={() => setShowAuth(true)}
+          onSignOut={() => signOut()}
+          onOpenPricing={handleOpenPricing}
+          onSelectPhoto={() => {
+            sessionStorage.setItem("studio_visited", "1");
+            setShowLanding(false);
+          }}
+          onSelectVideo={() => {
+            sessionStorage.setItem("studio_visited", "1");
+            setShowLanding(false);
+            navigate("/video");
+          }}
+        />
+        <AuthModal isOpen={showAuth} onClose={() => setShowAuth(false)} />
+      </>
     );
   }
 
   return (
     <div className="app-container flex flex-col h-screen overflow-hidden bg-[#121212] selection:bg-[#D4AF37]/30">
       <MainHeader 
-        falKey={falKey} 
         onToggleSidebar={() => setShowMobileSidebar(!showMobileSidebar)} 
         onToggleArchive={() => setShowMobileArchive(!showMobileArchive)} 
         onGoHome={() => {
           sessionStorage.removeItem("studio_visited");
           setShowLanding(true);
         }}
+        onOpenPricing={handleOpenPricing}
+        onOpenAuth={() => setShowAuth(true)}
       />
       
       <main className="flex flex-row flex-1 overflow-hidden relative">
@@ -518,6 +625,10 @@ const App: React.FC = () => {
       </main>
 
       <BottomStatus shootMode={shootMode} engine={engine} setShowSettings={setShowSettings} />
+      
+      <PricingModal isOpen={showPricing} onClose={() => setShowPricing(false)} />
+      <AuthModal isOpen={showAuth} onClose={() => setShowAuth(false)} />
+
       {/* ─── Enhanced Settings Modal ─── */}
       <AnimatePresence>
         {showSettings && (

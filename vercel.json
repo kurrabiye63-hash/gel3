@@ -1,0 +1,9 @@
+{
+  "github": {
+    "enabled": true,
+    "silent": false
+  },
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite"
+}

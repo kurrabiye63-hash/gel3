@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Download, Play, Film, Sparkles, Upload, Image as ImageIcon, X, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Download, Play, Film, Sparkles, Upload, Image as ImageIcon, X, AlertTriangle, Zap } from "lucide-react";
 import { fal } from "@fal-ai/client";
 import { generateVideoFromImage, VIDEO_LOCKED_PROMPT } from "../services/videoApi";
 import { uploadFile } from "../services/falApi";
+import { useAuth } from "../context/AuthContext";
+import { PricingModal } from "../components/PricingModal";
+import { AuthModal } from "../components/AuthModal";
 import logoUrl from "../logo.jpg";
 
 interface LocationState {
@@ -25,6 +28,10 @@ export const VideoPage: React.FC = () => {
   const [progressMsg, setProgressMsg] = useState("Veo 3.1 Pro Başlatılıyor...");
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [showPricing, setShowPricing] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+  
+  const { user, credits, deductCredits } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -50,6 +57,17 @@ export const VideoPage: React.FC = () => {
 
   const handleGenerate = async (urlOverride?: string) => {
     const targetUrl = urlOverride || imageUrl;
+
+    if (!user) {
+      setShowAuth(true);
+      return;
+    }
+
+    if ((credits ?? 0) < 10) {
+      navigate("/pricing");
+      return;
+    }
+
     if (!targetUrl) {
       setError("Lütfen önce bir görsel yükleyin.");
       return;
@@ -65,9 +83,18 @@ export const VideoPage: React.FC = () => {
     setIsGenerating(true);
     setVideoUrl(null);
     setError(null);
-    setProgressMsg("Veo 3.1 Pro Başlatılıyor...");
+    setProgressMsg("Kontürler Doğrulanıyor...");
 
     try {
+      // Deduct 10 credits for video
+      const success = await deductCredits(10);
+      if (!success) {
+        setError("Kontür düşülemedi. Bakiyenizi kontrol edin.");
+        setIsGenerating(false);
+        return;
+      }
+
+      setProgressMsg("Veo 3.1 Pro Başlatılıyor...");
       const url = await generateVideoFromImage(
         { imageUrl: targetUrl, duration: 8 },
         (msg) => setProgressMsg(msg)
@@ -131,12 +158,34 @@ export const VideoPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Veo badge */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#c27ba0]/10 border border-[#c27ba0]/20">
-          <Sparkles size={10} className="text-[#c27ba0]/80" />
-          <span className="text-[9px] font-bold text-[#c27ba0]/80 uppercase tracking-[0.15em]">Veo 3.1 Pro</span>
-          <span className="text-[8px] text-white/20">·</span>
-          <span className="text-[9px] text-white/30 font-medium">8 Saniye</span>
+        {/* User / Credits / Auth */}
+        <div className="flex items-center gap-4">
+          {user && (
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#D4AF37]/10 border border-[#D4AF37]/20 rounded-full cursor-pointer hover:bg-[#D4AF37]/20 transition-all" onClick={() => navigate("/pricing")}>
+              <Zap size={10} className="text-[#D4AF37] fill-[#D4AF37]" />
+              <span className="text-[10px] font-bold text-[#D4AF37]">{credits ?? 0} Kontür</span>
+            </div>
+          )}
+
+          {user ? (
+            <div className="w-8 h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] text-xs font-bold uppercase">
+              {user.email?.substring(0, 2)}
+            </div>
+          ) : (
+            <button 
+              onClick={() => setShowAuth(true)}
+              className="px-4 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-[10px] font-bold text-white transition-all"
+            >
+              Giriş Yap
+            </button>
+          )}
+
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#c27ba0]/10 border border-[#c27ba0]/20">
+            <Sparkles size={10} className="text-[#c27ba0]/80" />
+            <span className="text-[9px] font-bold text-[#c27ba0]/80 uppercase tracking-[0.15em]">Veo 3.1 Pro</span>
+            <span className="text-[8px] text-white/20">·</span>
+            <span className="text-[9px] text-white/30 font-medium">8 Saniye</span>
+          </div>
         </div>
       </header>
 
@@ -431,6 +480,9 @@ export const VideoPage: React.FC = () => {
           </AnimatePresence>
         </div>
       </main>
+      
+      <PricingModal isOpen={showPricing} onClose={() => setShowPricing(false)} />
+      <AuthModal isOpen={showAuth} onClose={() => setShowAuth(false)} />
     </div>
   );
 };
