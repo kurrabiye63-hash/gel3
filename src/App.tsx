@@ -180,6 +180,38 @@ const App: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const getCurrentViewMode = (): ViewMode => {
+    if (location.pathname === "/back") return "back";
+    if (location.pathname === "/closeup") return "closeup";
+    if (location.pathname === "/location") return "location";
+    if (location.pathname === "/location-closeup") return "location-closeup";
+    return "front";
+  };
+
+  useEffect(() => {
+    if (falKey) {
+      localStorage.setItem("FAL_KEY", falKey);
+      fal.config({ credentials: falKey });
+    }
+  }, [falKey]);
+
+  // Sync shootMode with route
+  useEffect(() => {
+    if (location.pathname === "/location" || location.pathname === "/location-closeup") {
+      setShootMode("location");
+    } else if (shootMode === "location" && location.pathname !== "/location" && location.pathname !== "/location-closeup") {
+      setShootMode("studio");
+    }
+  }, [location.pathname]);
+
+  // Auto-switch to Nano Banana Pro for back/closeup/location views
+  useEffect(() => {
+    const viewMode = getCurrentViewMode();
+    if (viewMode !== "front" && engine !== "fal-ai/nano-banana-pro/edit") {
+      setEngine("fal-ai/nano-banana-pro/edit");
+    }
+  }, [location.pathname]);
+
   if (loading) {
     return (
       <div className="fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center">
@@ -213,38 +245,6 @@ const App: React.FC = () => {
       </div>
     );
   }
-
-  const getCurrentViewMode = (): ViewMode => {
-    if (location.pathname === "/back") return "back";
-    if (location.pathname === "/closeup") return "closeup";
-    if (location.pathname === "/location") return "location";
-    if (location.pathname === "/location-closeup") return "location-closeup";
-    return "front";
-  };
-
-  useEffect(() => {
-    if (falKey) {
-      localStorage.setItem("FAL_KEY", falKey);
-      fal.config({ credentials: falKey });
-    }
-  }, [falKey]);
-
-  // Sync shootMode with route
-  useEffect(() => {
-    if (location.pathname === "/location" || location.pathname === "/location-closeup") {
-      setShootMode("location");
-    } else if (shootMode === "location" && location.pathname !== "/location" && location.pathname !== "/location-closeup") {
-      setShootMode("studio");
-    }
-  }, [location.pathname]);
-
-  // Auto-switch to Nano Banana Pro for back/closeup/location views
-  useEffect(() => {
-    const viewMode = getCurrentViewMode();
-    if (viewMode !== "front" && engine !== "fal-ai/nano-banana-pro/edit") {
-      setEngine("fal-ai/nano-banana-pro/edit");
-    }
-  }, [location.pathname]);
 
   const handleGenerate = async () => {
     const viewMode = getCurrentViewMode();
