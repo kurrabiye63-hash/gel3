@@ -53,9 +53,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) {
         if (error.code === 'PGRST116') {
           // Profile doesn't exist, create it
+          // Get user details from auth to include email
+          const { data: { user: authUser } } = await supabase.auth.getUser();
+          
           const { data: newProfile, error: createError } = await supabase
             .from('profiles')
-            .upsert({ id: userId, credits: 10 }) // Give 10 free credits for new users
+            .upsert({ 
+              id: userId, 
+              email: authUser?.email,
+              credits: 10 
+            }) // Give 10 free credits for new users
             .select()
             .single();
           

@@ -5,38 +5,57 @@ export interface VideoGenerationParams {
   duration?: number;
 }
 
-// ULTRA VOGUE FASHION CAMERA SYSTEM – VIDEO VERSION
+// PREMIUM FASHION FILM SYSTEM — VIDEO VERSION
 // Locked master prompt for all video generations
-// ULTRA LUXE FASHION CINEMATOGRAPHY SYSTEM
-// Locked master prompt for all video generations
-export const VIDEO_LOCKED_PROMPT = `ULTRA HIGH-FASHION EDITORIAL CINEMATOGRAPHY.
+export const VIDEO_LOCKED_PROMPT = `Use the provided input image as the visual reference for the outfit, styling, and studio mood.
 
-The output must be a luxury high-fashion campaign film. 
-Animate the provided input image with professional cinematic aesthetics.
+Create a premium high-end fashion film in a clean seamless infinity studio. Keep the outfit design, garment structure, silhouette, styling logic, fabric appearance, surface character, drape behavior, and overall visual integrity consistent with the reference image. Do not redesign the outfit. Do not add or remove design elements. Do not alter the garment's cut, length, proportions, color family, texture impression, or styling details.
 
-STRICT VISUAL CONSISTENCY:
-The garment, model's identity, and hair style from the input image must be preserved 100% across all frames. No morphing or redesign.
+Keep the studio environment minimal and elegant, matching the same clean infinity backdrop feeling. No props, no additional objects, no environmental transformation, no extra wardrobe items.
 
-GARMENT LOCK:
-Preserve all couture details including embroidery, lace, silhouette, and fabric texture. Only natural movement caused by wind or model posture is allowed.
+The model should remain visually consistent with the reference image in overall presentation, styling continuity, and fashion pose logic, while preserving a natural editorial fashion-film look. Maintain a refined, realistic, professional luxury campaign aesthetic.
 
-ENVIRONMENT:
-Outdoor magnificent botanical garden with a historic white European palace in the background. Symmetrical hedges, blooming flowers, and elegant stone pathways.
+The framing must work in both vertical and horizontal output formats. Adapt composition intelligently to the chosen format while preserving full garment readability, elegant proportions, and premium fashion presentation.
 
-MOTION & CAMERA:
-Minimal, sophisticated movement. 
-Slow cinematic push-in or gentle dolly lateral movement.
-Natural micro-expressions and subtle shifts in model posture.
-85mm fashion portrait lens with shallow depth of field and beautiful background blur.
+Style: luxury fashion campaign film, premium editorial, hyper-real, cinematic, clean, modern, controlled, sophisticated.
+Lighting: soft professional studio lighting, flattering and balanced, subtle highlights on the garment, realistic skin tones, refined contrast, high-end fashion photography quality.
+Motion: graceful, minimal, editorial model movement only. No exaggerated acting. No distortion. No unrealistic garment motion. No sudden pose jumps. Preserve natural fabric behavior and polished fashion presence.
 
-LIGHTING:
-Natural golden hour daylight, soft shadows, and elegant highlights on skin and fabric.
+Duration: 8 seconds total
 
-QUALITY:
-8K photorealistic fashion campaign quality. Hyper-detailed fabric textures.
+SHOT 1 | 0.0s to 2.6s
+Wide establishing fashion shot.
+Camera performs a slow, elegant dolly-in.
+The model makes a subtle weight shift and a minimal pose transition suitable for a luxury editorial fashion film.
+Keep the garment clearly visible and visually consistent.
 
-NEGATIVE:
-indoor, studio, ballroom, dress redesign, face morphing, identity drift, low quality, distorted, watermark.`;
+SHOT 2 | 2.6s to 5.2s
+Medium fashion shot.
+Camera performs a gentle orbit move around the model, approximately 15 to 20 degrees, with refined and stable motion.
+The model adds a soft shoulder turn and delicate hand movement.
+Preserve the garment's silhouette, drape, styling, and overall visual continuity.
+
+SHOT 3 | 5.2s to 8.0s
+Closer hero fashion shot.
+Camera slowly pushes in with subtle floating elegance, ending on a premium campaign-style final frame.
+The model holds a calm, confident, editorial expression with a refined final micro-pose.
+Keep the outfit readable and visually faithful to the reference.
+
+Constraints:
+- Keep the outfit visually faithful to the reference
+- Preserve the same garment design language and styling continuity
+- Do not change the fabric impression, color family, structure, or silhouette
+- No extra accessories
+- No background changes
+- No flicker
+- No warping
+- No anatomy distortion
+- No random garment mutation
+- No dramatic effects that distract from the product
+- Keep the fashion presentation elegant, minimal, realistic, and premium
+
+Overall result:
+A polished, globally acceptable luxury fashion film with industry-standard camera language, designed to present the referenced outfit in a clean professional infinity studio with maximum product clarity and premium editorial impact.`;
 
 export const generateVideoFromImage = async (
   params: VideoGenerationParams,
